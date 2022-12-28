@@ -1,0 +1,32 @@
+.wrapper {
+    max-width: 70rem;
+    margin: 2rem auto;
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 87.5%;
+    }
+}
+
+.isNotFoudTask {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 4rem;
+}
+
+.isNotFoudTask img {
+    margin-bottom: 1rem;
+}
+
+.isNotFoudTask>p {
+    font-size: 1.2rem;
+    color: var(--gray-200);
+    font-weight: bold;
+}
+
+.isNotFoudTask p+p {
+    color: var(--gray-300);
+}

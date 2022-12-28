@@ -1,0 +1,31 @@
+.headerBody {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 4.5rem;
+    max-width: 46rem;
+    margin: auto;
+}
+
+.headerBody p {
+    color: var(--blue);
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.headerBody p+p {
+    color: var(--purple-dark);
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.headerBody p span {
+    background: var(--gray-400);
+    padding: 5px 20px 5px 20px;
+    border-radius: 99999px;
+    color: var(--gray-100);
+}
+
+.headerBody {
+    margin-bottom: 2rem;
+}
