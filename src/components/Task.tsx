@@ -7,15 +7,16 @@ interface Task {
     content: string;
     isCompleted: boolean;
     completedTask: (id: number) => void;
+    deleteTask: (id: number) => void;
 }
-export function Task({ id, content, completedTask, isCompleted}: Task) {
+export function Task({ id, content, completedTask, isCompleted, deleteTask}: Task) {
     const [isChecked, setIsChecked] = useState(false);
     const [foundTask, setFoundTask] = useState(0);
 
     function handleCheckTask() {
-        // isChecked ? setIsChecked(false) : setIsChecked(true);
         completedTask(id);
     }
+
 
     return (
         <div className={style.task}>
@@ -25,8 +26,8 @@ export function Task({ id, content, completedTask, isCompleted}: Task) {
                             isCompleted ? <Check weight='bold' color='#fff' size={12} /> : ''
                         }
                     </div>
-                    <p>{content}</p>
-                    <button  title='Deletar comentário'>
+                    <p className={ isCompleted ? style.textCompleted : style.text }>{content}</p>
+                    <button onClick={() => deleteTask(id)} title='Deletar comentário'>
                         <Trash size={24} />
                     </button>
                 </div>

@@ -1,32 +1,38 @@
 import style from './InputNewTask.module.css';
 import { PlusCircle } from 'phosphor-react'
-import { ChangeEvent, useState } from 'react';
-
-
+import { ChangeEvent, useState, FormEvent } from 'react';
 interface InputTask{
-    createNewTask: () => vpid;
+    createNewTask:(newTask: string) => void;
 }
 
+interface taskObject {
+    id: number;
+    content: string;
+    isCompleted: boolean
+  }
+
+interface NewTask{
+    newTask: string;
+}
 export function InputNewTask({createNewTask}: InputTask) {
 
     const [newTask, setNewTask] = useState('');
-    const [taskText, setTaskText] = useState([]);
 
     function handleTaskChange(event: ChangeEvent<HTMLInputElement>) {
         event.target.setCustomValidity('');
-        setTaskText(event.target.value);
+        setNewTask(event.target.value)
     }
 
     function handleCreateNewTask(event: FormEvent) {
-        event.preventDefault();
+        event.preventDefault();       
+        createNewTask(newTask);
     }
 
     return (
-        taskText.map(task => {
             <form onSubmit={handleCreateNewTask} className={style.containerInput}>
                 <input
                     type="text"
-                    name="tasksNAme"
+                    name="tasksName"
                     onChange={handleTaskChange}
                     placeholder='Adicione uma nova tarefa.' />
                 <button>
@@ -34,6 +40,5 @@ export function InputNewTask({createNewTask}: InputTask) {
                     <PlusCircle size={20} />
                 </button>
             </form>
-        })
     );
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, FormEvent } from 'react'
 import Clipboard from './assets/Clipboard.svg'
 import './global.css';
 import style from './app.module.css'
@@ -6,51 +6,67 @@ import { Header } from './components/Header'
 import { InputNewTask } from './components/InputNewTask';
 import { HeaderBody } from './components/HeaderBody';
 import { Task } from './components/Task';
+import uuid from 'react-uuid';
 
+interface taskObject {
+  id: number;
+  content: string;
+  isCompleted: boolean
+}
 function App() {
+
   const [count, setCount] = useState(0);
-  const [tasksList, setTasksList] = useState([]);
+  const [tasksList, setTasksList] = useState<taskObject>([]);
 
-  // function handleCompleteTask(id: number) {
+  function handleCompleteTask(id: number) {
+    let result2 = tasksList.reduce((acc, task) => {
 
-  //   const cc = tasks.filter(task => {
-  //     return task.id === id;
-  //   });
+      let obj = id.includes(task.id) ? Object.assign(task, task.isCompleted ?  {isCompleted: false} :  {isCompleted: true}) : task;
+      
+      acc.push(obj);
+  
+      return acc;
+  
+  }, []);
 
-  //   cc.isCompleted ? cc.isCompleted[2] = false : cc.isCompleted[2] = true;
-  //   console.log(cc)
-  // }
+  setTasksList(result2)
+  }
 
-  // function handleCreateNewTask() {
-  //   setTasksList([...tasks, count]);
-  // }
+  function handleCreateNewTask(taskValue: string, event: FormEvent) {
 
-  const tasks = [
-    {
-      id: 0,
-      content: 'Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.',
-      isCompleted: true
-    },
-    {
-      id: 1,
-      content: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolores assumenda ullam deserunt dignissimos consectetur suscipit totam sapiente tenetur maiores. Sunt, voluptatibus reprehenderit! At rerum consequuntur sit natus repellat molestiae nihil!',
+    const task = ({
+      id: uuid(),
+      content: taskValue,
       isCompleted: false
+    });
 
-    },
-    {
-      id: 2,
-      content: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolores assumenda ullam deserunt dignissimos consectetur suscipit totam sapiente tenetur maiores. Sunt, voluptatibus reprehenderit! At rerum consequuntur sit natus repellat molestiae nihil!',
-      isCompleted: true
-    }
-  ]
+    setTasksList([...tasksList, task])
+  }
+
+
+  const createdTasks = tasksList.length;
+  const countCompletedTasks = tasksList.filter(tasksCompleted => {
+    return tasksCompleted.isCompleted === true;
+  });
+
+  const completedTasks = countCompletedTasks.length;
+
+  function onDeleteTask(id: number){
+    console.log(id)
+      const commentsWithoudDeletedOne = tasksList.filter(task => {
+          return task.id !== id;
+      });
+      setTasksList(commentsWithoudDeletedOne);
+  }
+
   return (
     <>
       <Header />
       <div className={style.wrapper}>
         <InputNewTask createNewTask={handleCreateNewTask} />
-        <HeaderBody />
+        <HeaderBody createdTasks={createdTasks} completedTasks={completedTasks}  />
         {
-          tasks.length === 0 ?
+          tasksList.length === 0 ?
             <section className={style.secttionTasks}>
               <div className={style.isNotFoudTask}>
                 <img src={Clipboard} alt="Icons task" />
@@ -59,13 +75,15 @@ function App() {
               </div>
             </section>
             :
-            tasks.map(task => {
+            tasksList.map(task => {
               return (
                 <Task
+                  key={task.id}
                   id={task.id}
                   content={task.content}
                   isCompleted={task.isCompleted}
                   completedTask={handleCompleteTask}
+                  deleteTask={onDeleteTask}
                 />
               );
             })
