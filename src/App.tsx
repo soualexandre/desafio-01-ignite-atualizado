@@ -40,11 +40,11 @@ function App() {
       isCompleted: false
     });
 
-    setTasksList([...tasksList, task])
+    setTasksList([...tasksList, task]);
   }
 
-
   const createdTasks = tasksList.length;
+
   const countCompletedTasks = tasksList.filter(tasksCompleted => {
     return tasksCompleted.isCompleted === true;
   });
@@ -52,7 +52,6 @@ function App() {
   const completedTasks = countCompletedTasks.length;
 
   function onDeleteTask(id: number){
-    console.log(id)
       const commentsWithoudDeletedOne = tasksList.filter(task => {
           return task.id !== id;
       });

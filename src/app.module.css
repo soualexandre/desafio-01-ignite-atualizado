@@ -9,6 +9,12 @@
     }
 }
 
+.secttionTasks hr {
+    max-width: 46rem;
+    margin: auto;
+    border: 1.5px solid var(--gray-400);
+}
+
 .isNotFoudTask {
     display: flex;
     justify-content: center;
@@ -23,10 +29,13 @@
 
 .isNotFoudTask>p {
     font-size: 1.2rem;
-    color: var(--gray-200);
+    color: var(--gray-300);
     font-weight: bold;
+    line-height: 1.6rem;
 }
 
 .isNotFoudTask p+p {
     color: var(--gray-300);
+    font-weight: lighter;
+    opacity: 60%;
 }

@@ -5,15 +5,6 @@ interface InputTask{
     createNewTask:(newTask: string) => void;
 }
 
-interface taskObject {
-    id: number;
-    content: string;
-    isCompleted: boolean
-  }
-
-interface NewTask{
-    newTask: string;
-}
 export function InputNewTask({createNewTask}: InputTask) {
 
     const [newTask, setNewTask] = useState('');
@@ -26,12 +17,14 @@ export function InputNewTask({createNewTask}: InputTask) {
     function handleCreateNewTask(event: FormEvent) {
         event.preventDefault();       
         createNewTask(newTask);
+        setNewTask('');
     }
 
     return (
             <form onSubmit={handleCreateNewTask} className={style.containerInput}>
                 <input
                     type="text"
+                    value={newTask}
                     name="tasksName"
                     onChange={handleTaskChange}
                     placeholder='Adicione uma nova tarefa.' />

@@ -10,8 +10,6 @@ interface Task {
     deleteTask: (id: number) => void;
 }
 export function Task({ id, content, completedTask, isCompleted, deleteTask}: Task) {
-    const [isChecked, setIsChecked] = useState(false);
-    const [foundTask, setFoundTask] = useState(0);
 
     function handleCheckTask() {
         completedTask(id);
